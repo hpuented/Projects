@@ -12,66 +12,7 @@ from scipy import signal
 
 class HRV(object):
     """
-    This class allows to perform a basic Heart Rate Variability Analysis from an
-    RR-Interval time series. It is supposed that a numpy array (n_samples, 1) with 
-    RR intervals is available, as well as beat label numpy array vector.
-    
-    HRV is the term used to describe the variations in the time intervals between
-    consecutive heart beats. HRV is usually studied by analyzing the
-    RR-interval time series (beat-to-beat time interval) derived from the ECG.
-    The extraction of the RR-intervals from the ECG can be achieved by measuring
-    the time intervals between QRS complexes, which are the electrical
-    marks registered in an ECG when a cardiac beat occurred. RR-interval time
-    series (sometimes called RR tachogram) is usually constructed as a function
-    of the interval number. HRV is due to the activity of the SA node, as the 
-    source of the repetitive impulses that generate the normal beats. 
-    The SA node is in turninfluenced by the ANS, namely by the parasympathetic 
-    and sympathetic branches, which interact in a complex way with a variety of
-    reflexes and systems. HRV has been suggested as a noninvasive tool to assess
-    the state of the system that controls the heart rhythm and its relationship
-    with cardiovascular mortality. The clinical relevance of the HRV has been 
-    established in several studies. Hon and Lee reported in 1965 that fetal 
-    distress was preceded by alterations in the interbeat intervals. Wolf et al. 
-    established in 1977 an association of higher risk of post-infarction mortality 
-    in patients with reduced HRV. Indeed, it has been shown that low HRV is 
-    associated with some cardiac illness: myocardial infarction, atherosclerosis, 
-    heart failure, and even with ageing. The underlying assumption, 
-    when studying HRV, is that short-term and long-term variations in HR have 
-    different physiological origins and the magnitude of these variations has 
-    been shown to be indicative of the autonomic state of the subject. For instance, 
-    after a myocardial infarction, the innervation level of the heart decreases, 
-    and part of the nervous control of this organ can be lost. The HRV reflects 
-    this control loss and it makes possible the classification of SCD risk groups.
-    The degeneration of the ANS due to the ageing can also be inferred by the 
-    analysis of the HRV. Therefore, it would be possible to characterize 
-    different cardiovascular states by just measuring the HRV.
-    The methods used in HRV analysis can be very roughly divided into three main 
-    groups, namely, time-domain methods, frequency-domain methods, and nonlinear methods.
-    Time-domain methods are the simplest ones in computational terms. They treat 
-    the RR-interval sequence as an unordered set of intervals and employ different 
-    techniques to express the variance of such data. They can be split into two categories 
-    statistical descriptors, and geometrical descriptors. Frequency-domain methods 
-    are based on PSD estimation, which providesthe basic information on how the
-    power (i.e. the variance) is distributed as a function of frequency. The different
-    systems modulating the HR (i.e. modulating the behavior of the ANS) oscillate
-    spontaneously with specific frequencies. Thus, when the PSD is taken from a 
-    HRV signal, it is expected to extract information on those systems related 
-    to cardiac autonomic function, that is, to identify the harmonic frequency
-    components that correspond to each system. It is possible, for example, to
-    quantify the power of the different spectral components in PSD as a 
-    measurement of the contribution of each system to the global variability.
-    PSD is generally estimated from the RR-Interval time series. Since it is a
-    representation of the beat-to-beat variability, it is inherently a discrete and
-    uneven time series (this is the reason for the variability). However, almost
-    all of the PSD estimation methods require evenly sampled data.
-    
     In this class, Time-Domain and Frequency-Domain methods are implemented.
-    
-    This introduction was taking from:
-        
-        * O. Barquero-Pérez: "Robust Signal Processing in Cardiac Signals: Applications
-        in Heart Rate Variability, Heart Rate Turbulence and Fibrillatory Arrhythmias".
-        PhD Dissertation. 2014 (Spain).
     """
     def __init__(self):
         self.HRV_statistical = {} 
@@ -857,21 +798,10 @@ class HRV(object):
         """
         Estimate power spectral dnesity using Welchs method.
         
-        Notes
-        -----
-        
         It is just a wrapper function of the method provided by
         
         scipy.signal.welch
         
-        References
-        ----------
-        .. [1] P. Welch, "The use of the fast Fourier transform for the
-        estimation of power spectra: A method based on time averaging
-        over short, modified periodograms", IEEE Trans. Audio
-        Electroacoust. vol. 15, pp. 70-73, 1967.
-        .. [2] M.S. Bartlett, "Periodogram Analysis and Continuous Spectra",
-        Biometrika, vol. 37, pp. 1-16, 1950.
         """
         
         rr = rr - np.mean(rr)
@@ -1051,8 +981,7 @@ class HRV(object):
     def beat_label_filter(self, beat_labels, numBeatsAfterV = 4):
         """
         Artifact detection function using beat labels. It processes the RR 
-        interval time series in a beat-wise fashion. An interval is identified as
-        non-sinusal using the information of the beat detection label. Every
+        interval time series in a beat-wise fashion. Every
         label different from "N" is considered a nont-sinusal beat. Additionally,
         beats labele as "V" (ventricular), induces that the posterior beats are 
         considered non-sinusal, even if the label is "N". The number of beats
