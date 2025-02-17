@@ -7,24 +7,23 @@ import math
 from funciones_p2 import *
 
 
-#SEGMENTACIÓN POR CRECIMIENTO DE REGIONES
-def RegionGrowingP2(img_norm, list_sem, umbral):
+def RegionGrowing(img_norm, list_sem, umbral):
     '''
-    Segmentación por crecimiento de regiones.
+    Segmentation by growth regions.
     
-    Parámetros:
-        imagen : matriz de la imagen normalizada.
-        list_sem : lista de coordenadas de las semillas.
-        umbral: valor determinante del rango de grises incluidos en el criterio de homogeneidad. 
+    Parameters:
+        image : normalised image matrix.
+        list_sem : list of seed coordinates.
+        threshold : determinant value of the range of greys included in the homogeneity criterion. 
         
-    Devuelve:
-        matriz_cr : matriz de la imagen segmentada.
+    Returns:
+        matrix_cr : matrix of the segmented image.
     
-    Notas:
-        Se normaliza la imagen y se obtienen las coordenadas de la semilla. A continuación se crea
-        una matriz de ceros del tamaño de la imagen normalizada y se establece con valor 1 la coordenada 
-        donde se ha clicado. Se analizan los 8 vecinos iterativamente hasta que los píxeles no cumplan
-        la condición.
+    Notes:
+        The image is normalised and the seed coordinates are obtained. Then create
+        an array of zeros of the size of the normalised image and set the clicked coordinate to 1. 
+        where it has been clicked. The 8 neighbours are analysed iteratively until the pixels do not meet the condition.
+        the condition.
     '''
     
     coord_sem = list_sem[0] #Coordenada de la semilla.
